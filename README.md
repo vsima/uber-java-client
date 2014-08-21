@@ -1,6 +1,9 @@
 
 #Uber API client for Android & Java
-This is an an api client library for Uber's new public api for Android and Java applications.
+An api client library for Uber's public rest api for Android and Java applications. This library currently supports all api calls using server_token authentication:
+ * product types
+ * price estimates
+ * time estimates
 
 ##Build Status
 [![Build Status](https://travis-ci.org/vsima/uber-java-client.svg?branch=master)](https://travis-ci.org/vsima/uber-java-client)

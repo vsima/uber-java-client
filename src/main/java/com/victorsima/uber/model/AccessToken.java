@@ -2,7 +2,9 @@ package com.victorsima.uber.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+/**
+ * Uber Oauth2 AccessToken model obj
+ */
 public class AccessToken {
 
     @Expose

@@ -1,7 +1,7 @@
 package com.victorsima.uber.model;
 
 /**
- * Created by victorsima on 8/20/14.
+ * Uber User Activity model obj
  */
 public class UserActivity {
 
