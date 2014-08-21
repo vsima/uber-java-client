@@ -3,6 +3,7 @@ package com.victorsima.uber.test;
 import com.victorsima.uber.UberClient;
 import com.victorsima.uber.model.Prices;
 import com.victorsima.uber.model.Products;
+import com.victorsima.uber.model.Times;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,7 +82,7 @@ public class UberClientTest {
     }
 
     @Test
-    public void testGetTimeEstimates() {
+    public void testGetPriceEstimates() {
         Prices prices = client.getApiService().getPriceEstimates(
                 Double.parseDouble(startLatitude),
                 Double.parseDouble(startLongitude),
@@ -91,5 +92,19 @@ public class UberClientTest {
 
         assertNotNull("get price estimates response is null", prices);
         assertNotNull("price estimates list is null", prices.getPrices());
+    }
+
+
+    @Test
+    public void testGetTimeEstimates() {
+        Times times = client.getApiService().getTimeEstimates(
+                Double.parseDouble(startLatitude),
+                Double.parseDouble(startLongitude),
+                null,
+                null);
+
+
+        assertNotNull("get time estimates response is null", times);
+        assertNotNull("time estimates list is null", times.getTimes());
     }
 }
