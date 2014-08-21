@@ -51,6 +51,20 @@ public class UberClientTest {
         }
 
         client = new UberClient("v1", "", "", null, RestAdapter.LogLevel.FULL);
+        String serverToken = props.getProperty("uber_server_token");
+        serverToken = System.getProperty("uber_product_latitude", serverToken);
+        assertNotNull("uber_server_token property is null. Make sure you have a unittest.properties file in " +
+                "/src/test/resources/ directory.", serverToken);
+
+        latitude = props.getProperty("uber_product_latitude");
+        latitude = System.getProperty("uber_product_latitude", latitude);
+        assertNotNull("uber_product_latitude property is null. Make sure you have a unittest.properties file in " +
+                "/src/test/resources/ directory.", serverToken);
+
+        longitude = props.getProperty("uber_product_longitude");
+        longitude = System.getProperty("uber_product_longitude", longitude);
+        assertNotNull("product_longitude property is null. Make sure you have a unittest.properties file in " +
+                "/src/test/resources/ directory.", serverToken);
         client.setServerToken(serverToken);
     }
 
