@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by victorsima on 8/20/14.
+ * Price model obj
  */
 public class Price {
 

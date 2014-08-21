@@ -7,7 +7,7 @@ import com.victorsima.uber.model.Product;
 import java.util.List;
 
 /**
- * Created by victorsima on 8/20/14.
+ * Products model obj
  */
 public class Products {
 

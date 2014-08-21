@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by victorsima on 8/21/14.
+ * Times model obj
  */
 public class Times {
 

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by victorsima on 8/20/14.
+ * Prices model obj
  */
 public class Prices {
 
