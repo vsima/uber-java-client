@@ -26,21 +26,31 @@ public class UberClientTest {
     @Before
     public void setup() throws Exception {
 
+        String serverToken = null;
+
         InputStream is = getClass().getResourceAsStream("/unittest.properties");
-        Properties props = new Properties();
-        props.load(is);
+        if (is != null) {
+            Properties props = new Properties();
+            props.load(is);
+
+            serverToken = props.getProperty("uber_server_token");
+            assertNotNull("uber_server_token property is null. Make sure you have a unittest.properties file in " +
+                    "/src/test/resources/ directory.", serverToken);
+
+            latitude = props.getProperty("uber_product_latitude");
+            assertNotNull("uber_product_latitude property is null. Make sure you have a unittest.properties file in " +
+                    "/src/test/resources/ directory.", latitude);
+
+            longitude = props.getProperty("uber_product_longitude");
+            assertNotNull("uber_product_longitude property is null. Make sure you have a unittest.properties file in " +
+                    "/src/test/resources/ directory.", longitude);
+        } else {
+            serverToken = System.getProperty("uber_server_token");
+            latitude = System.getProperty("uber_product_latitude");
+            longitude = System.getProperty("uber_product_longitude");
+        }
 
         client = new UberClient("v1", "", "", null, RestAdapter.LogLevel.FULL);
-        String serverToken = props.getProperty("server_token");
-        assertNotNull("server_token property is null. Make sure you have a unittest.properties file in " +
-                "/src/test/resources/ directory.", serverToken);
-
-        latitude = props.getProperty("product_latitude");
-        assertNotNull("product_latitude property is null. Make sure you have a unittest.properties file in " +
-                "/src/test/resources/ directory.", serverToken);
-        longitude = props.getProperty("product_longitude");
-        assertNotNull("product_longitude property is null. Make sure you have a unittest.properties file in " +
-                "/src/test/resources/ directory.", serverToken);
         client.setServerToken(serverToken);
     }
 
@@ -51,8 +61,8 @@ public class UberClientTest {
 
     @Test
     public void testGetProducts() {
-        Products products = client.getApiService().getProducts(Double.valueOf(latitude).doubleValue(),
-                Double.valueOf(longitude).doubleValue());
+        Products products = client.getApiService().getProducts(Double.parseDouble(latitude),
+                Double.parseDouble(longitude));
         assertNotNull("get products response is null", products);
         assertNotNull("products list is null", products.getProducts());
     }
