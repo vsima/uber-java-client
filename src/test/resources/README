@@ -1,4 +1,0 @@
-Create a unittest.properties file in this folder and set the uber_server_token property in the file to run the unit tests.
-
-Example:
-uber_server_token=<YOUR_SERVER_TOKEN>
