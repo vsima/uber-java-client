@@ -1,0 +1,7 @@
+/.idea
+uber-java-api.iml
+/target
+/src/test/resources/unittest.properties
+.DS_Store
+/build
+/.gradle

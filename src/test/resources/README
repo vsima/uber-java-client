@@ -1,0 +1,4 @@
+Create a unittest.properties file in this folder and set the server_token property in the file to run the unit tests.
+
+Example:
+server_token=<YOUR_SERVER_TOKEN>
