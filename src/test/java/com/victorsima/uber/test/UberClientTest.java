@@ -1,6 +1,7 @@
 package com.victorsima.uber.test;
 
 import com.victorsima.uber.UberClient;
+import com.victorsima.uber.model.Prices;
 import com.victorsima.uber.model.Products;
 import org.junit.After;
 import org.junit.Before;
@@ -22,6 +23,8 @@ public class UberClientTest {
 
     private UberClient client;
     private String latitude, longitude;
+    private String startLatitude, startLongitude;
+    private String endLatitude, endLongitude;
 
     @Before
     public void setup() throws Exception {
@@ -44,10 +47,20 @@ public class UberClientTest {
             longitude = props.getProperty("uber_product_longitude");
             assertNotNull("uber_product_longitude property is null. Make sure you have a test.properties file in " +
                     "/src/test/resources/ directory.", longitude);
+
+
+            startLatitude = props.getProperty("uber_price_start_latitude");
+            startLongitude = props.getProperty("uber_price_start_longitude");
+            endLatitude = props.getProperty("uber_price_end_latitude");
+            endLongitude = props.getProperty("uber_price_end_longitude");
         } else {
             serverToken = System.getProperty("uber_server_token");
             latitude = System.getProperty("uber_product_latitude");
             longitude = System.getProperty("uber_product_longitude");
+            startLatitude = System.getProperty("uber_price_start_latitude");
+            startLongitude = System.getProperty("uber_price_start_longitude");
+            endLatitude = System.getProperty("uber_price_end_latitude");
+            endLongitude = System.getProperty("uber_price_end_longitude");
         }
 
         client = new UberClient("v1", "", "", null, RestAdapter.LogLevel.FULL);
@@ -65,5 +78,18 @@ public class UberClientTest {
                 Double.parseDouble(longitude));
         assertNotNull("get products response is null", products);
         assertNotNull("products list is null", products.getProducts());
+    }
+
+    @Test
+    public void testGetTimeEstimates() {
+        Prices prices = client.getApiService().getPriceEstimates(
+                Double.parseDouble(startLatitude),
+                Double.parseDouble(startLongitude),
+                Double.parseDouble(endLatitude),
+                Double.parseDouble(endLongitude));
+
+
+        assertNotNull("get price estimates response is null", prices);
+        assertNotNull("price estimates list is null", prices.getPrices());
     }
 }
