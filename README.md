@@ -23,7 +23,7 @@ compile 'com.victorsima:uber-java-client:0.0.1'
 
 Usage
 -----
-```
+```java
 UberClient client = new UberClient("v1", "YOUR_OAUTH_ID", "YOUR_OAUTH_SECRET", RestAdapter.LogLevel.BASIC);
 client.setServerToken("YOUR_SERVER_TOKEN");
 Products products = client.getApiService().getProducts(40.74844,-73.985664);
