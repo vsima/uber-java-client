@@ -55,13 +55,13 @@ public class UberClientTest {
             endLatitude = props.getProperty("uber_price_end_latitude");
             endLongitude = props.getProperty("uber_price_end_longitude");
         } else {
-            serverToken = System.getProperty("uber_server_token");
-            latitude = System.getProperty("uber_product_latitude");
-            longitude = System.getProperty("uber_product_longitude");
-            startLatitude = System.getProperty("uber_price_start_latitude");
-            startLongitude = System.getProperty("uber_price_start_longitude");
-            endLatitude = System.getProperty("uber_price_end_latitude");
-            endLongitude = System.getProperty("uber_price_end_longitude");
+            serverToken = System.getenv("uber_server_token");
+            latitude = System.getenv("uber_product_latitude");
+            longitude = System.getenv("uber_product_longitude");
+            startLatitude = System.getenv("uber_price_start_latitude");
+            startLongitude = System.getenv("uber_price_start_longitude");
+            endLatitude = System.getenv("uber_price_end_latitude");
+            endLongitude = System.getenv("uber_price_end_longitude");
         }
 
         client = new UberClient("v1", "", "", null, RestAdapter.LogLevel.FULL);
