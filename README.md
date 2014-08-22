@@ -8,17 +8,17 @@ A java wrapper for Uber's REST API for Android and Java applications.
 Download
 --------
 
-Download [the latest JAR][1] or grab via Maven Central:
+Download [the latest JAR][1] or grab via Gradle:
+```groovy
+compile 'com.victorsima:uber-java-client:0.0.1'
+```
+or Maven:
 ```xml
 <dependency>
   <groupId>com.victorsima</groupId>
   <artifactId>uber-java-client</artifactId>
   <version>0.0.1</version>
 </dependency>
-```
-or Gradle:
-```groovy
-compile 'com.victorsima:uber-java-client:0.0.1'
 ```
 
 Usage
