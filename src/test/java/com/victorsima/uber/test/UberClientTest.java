@@ -56,7 +56,11 @@ public class UberClientTest {
             endLongitude = props.getProperty("uber_price_end_longitude");
         } else {
             serverToken = System.getProperty("uber_server_token");
+            assertNotNull("uber_server_token property is null", serverToken);
+
             latitude = System.getProperty("uber_product_latitude");
+            assertNotNull("uber_product_latitude property is null", latitude);
+
             longitude = System.getProperty("uber_product_longitude");
             startLatitude = System.getProperty("uber_price_start_latitude");
             startLongitude = System.getProperty("uber_price_start_longitude");
