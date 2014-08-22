@@ -1,7 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 sourceCompatibility = 1.7
+group = "com.victorsima"
+archivesBaseName = "uber-java-client"
 version = '0.0.1'
 
 repositories {
@@ -25,4 +29,68 @@ jacocoTestReport {
         csv.enabled false
         html.destination "${buildDir}/jacocoHtml"
     }
+}
+
+
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: ossrhRepositoryUrl) {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      snapshotRepository(url: ossrhSnapshotRepositoryUrl) {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      pom.project {
+        name 'Uber java REST Api client'
+        packaging 'jar'
+        description 'uber-java-client'
+        url 'https://github.com/vsima/uber-java-client'
+
+        scm {
+          connection 'scm:git:git@github.com:vsima/uber-java-client.git'
+          developerConnection 'scm:git:git@github.com:vsima/uber-java-client.git'
+          url 'git@github.com:vsima/uber-java-client.git'
+        }
+
+        licenses {
+          license {
+            name 'The MIT License (MIT)'
+            url 'http://opensource.org/licenses/MIT'
+          }
+        }
+
+        developers {
+          developer {
+            id ossrhDevId
+            name ossrhDevName
+            email ossrhDevEmail
+          }
+        }
+      }
+    }
+  }
 }
