@@ -8,3 +8,8 @@ uber-java-client.iml
 gradle.properties
 
 Example/android/.gradle
+Example/android/UberTestApp/local.properties
+Example/android/UberTestApp/app/uber.properties
+Example/android/UberTestApp/.idea
+Example/android/UberTestApp/UberTestApp.iml
+
