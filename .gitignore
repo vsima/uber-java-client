@@ -6,3 +6,5 @@ uber-java-client.iml
 /build
 /.gradle
 gradle.properties
+
+Example/android/.gradle

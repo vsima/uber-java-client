@@ -9,7 +9,7 @@ import retrofit.http.Header;
 import retrofit.http.Query;
 
 /**
- * Created by victorsima on 8/20/14.
+ * Uber Service interface
  */
 public interface UberService {
 
