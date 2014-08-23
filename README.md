@@ -26,13 +26,29 @@ Usage
 ```java
 UberClient client = new UberClient("v1", "YOUR_OAUTH_ID", "YOUR_OAUTH_SECRET", RestAdapter.LogLevel.BASIC);
 client.setServerToken("YOUR_SERVER_TOKEN");
+```
+####Synchronous api call
+```java
 Products products = client.getApiService().getProducts(40.74844,-73.985664);
 ```
+####Asynchronous api call
+```java
+client.getApiService().getProducts(40.74844, -73.985664, new Callback<Products>() {
+  @Override
+  public void success(Products products, Response response) {
+      
+  }
+  
+  @Override
+  public void failure(RetrofitError error) {
 
+  }
+});
+```
 
 Testing
 --------
-  * rename src/test/resources/_test.properties to test.properties and populate with your application data
+  * rename src/test/resources/_test.properties to test.properties and populate your Uber api keys
   * run ./gradle test
  
 
