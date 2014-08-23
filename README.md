@@ -36,12 +36,10 @@ Products products = client.getApiService().getProducts(40.74844,-73.985664);
 client.getApiService().getProducts(40.74844, -73.985664, new Callback<Products>() {
   @Override
   public void success(Products products, Response response) {
-      
   }
   
   @Override
   public void failure(RetrofitError error) {
-
   }
 });
 ```
@@ -49,8 +47,11 @@ client.getApiService().getProducts(40.74844, -73.985664, new Callback<Products>(
 Testing
 --------
   * rename src/test/resources/_test.properties to test.properties and populate your Uber api keys
-  * run ./gradle test
+  * run ./gradlew test
  
+Contributors
+------------
+  * 
 
 License
 -------------
