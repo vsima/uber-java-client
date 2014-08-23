@@ -51,7 +51,7 @@ Testing
  
 Contributors
 ------------
-  * 
+  * Join the crew! Pull requests are welcome.
 
 License
 -------------
