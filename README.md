@@ -1,7 +1,6 @@
-[![Build Status](https://travis-ci.org/vsima/uber-java-client.svg?branch=master)](https://travis-ci.org/vsima/uber-java-client)
-
 Uber API client for Android & Java
 ==================================
+[![Build Status](https://travis-ci.org/vsima/uber-java-client.svg?branch=master)](https://travis-ci.org/vsima/uber-java-client)
 
 A java wrapper for Uber's REST API for Android and Java applications. 
 
@@ -9,7 +8,11 @@ A java wrapper for Uber's REST API for Android and Java applications.
 Download
 --------
 
-Download [the latest JAR][1] or grab via Maven Central:
+Download [the latest JAR][1] or grab via Gradle:
+```groovy
+compile 'com.victorsima:uber-java-client:0.0.1'
+```
+or Maven:
 ```xml
 <dependency>
   <groupId>com.victorsima</groupId>
@@ -17,25 +20,38 @@ Download [the latest JAR][1] or grab via Maven Central:
   <version>0.0.1</version>
 </dependency>
 ```
-or Gradle:
-```groovy
-compile 'com.victorsima:uber-java-client:0.0.1'
-```
 
 Usage
 -----
-```
+```java
 UberClient client = new UberClient("v1", "YOUR_OAUTH_ID", "YOUR_OAUTH_SECRET", RestAdapter.LogLevel.BASIC);
 client.setServerToken("YOUR_SERVER_TOKEN");
+```
+####Synchronous api call
+```java
 Products products = client.getApiService().getProducts(40.74844,-73.985664);
 ```
-
+####Asynchronous api call
+```java
+client.getApiService().getProducts(40.74844, -73.985664, new Callback<Products>() {
+  @Override
+  public void success(Products products, Response response) {
+  }
+  
+  @Override
+  public void failure(RetrofitError error) {
+  }
+});
+```
 
 Testing
 --------
-  * rename src/test/resources/_test.properties to test.properties and populate with your application data
-  * run ./gradle test
+  * rename src/test/resources/_test.properties to test.properties and populate your Uber api keys
+  * run ./gradlew test
  
+Contributors
+------------
+  * Join the crew! Pull requests are welcome.
 
 License
 -------------
