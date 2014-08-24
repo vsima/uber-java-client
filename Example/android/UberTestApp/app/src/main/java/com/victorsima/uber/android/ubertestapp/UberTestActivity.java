@@ -118,6 +118,8 @@ public class UberTestActivity extends Activity
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+
+        UberClient uberClient;
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -137,12 +139,25 @@ public class UberTestActivity extends Activity
         }
 
         public PlaceholderFragment() {
+
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_uber_test, container, false);
+            uberClient = ((UberApplication)getActivity().getApplication()).getUberClient();
+            uberClient.getApiService().getProducts(40.74844, -73.985664, new Callback<Products>() {
+                @Override
+                public void success(Products products, Response response) {
+                    Log.i(TAG, "");
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.e(TAG, "");
+                }
+            });
             return rootView;
         }
 
