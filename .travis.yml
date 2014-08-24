@@ -1,4 +1,6 @@
 language: java
+jdk:
+- oraclejdk7
 env:
   global:
   - secure: fzKjWeiyYQj103eldqU49/jCM2OwEE0erZisE4kBvYHvTxEDsyq3b7D8gH93WpY9lfAVdeO4Zif4UmSFlZdtX4KMKNEbvHyNAFKH6VxlGGn/IGSgafPwxHT4ge9dvyq07Qpbgn6wAebcjHKp2ncKBp+k2iv2Hnv/qUTcT7hwe5U=
@@ -11,3 +13,6 @@ env:
   - secure: PXQ6kJnaAIRQ8qfQSGCmemz2gSyNsR+Kwn410o8DFe2cgOrtOuE/DvYcXqCxJFxllL5OnDvA9lvmqbahanWb3xfYe4mnOBgNxr34hg6zmbY/FpnOHEWR2l/cXFCRsAAcPH0BA6Ld9i9W3IqPAP+9NN/mML+jppOpfsCdT5nj//U=
   - secure: HPjdBvwY3NOE+bkhksrRpP9PE0xovdvu8ccETJd4Ss0mUIBtguV3hrczBJqsTxaCz9llGtYO+V6+n6aBaP8H+VTGX/L1hSC2Vg2HnyW7AFaI0cVgtgezZLXE1QRvuhx95+W7dUltRc6NsrwFI/nBuGNi0As5cF4d1nlITvul1Ik=
   - secure: hg7cU20HxxvBSgXTGZQAgZ/g5+UpBIL/7mecwMhIqIAFVc60qadRO+Tb2+Zy0UbqI4aeerrUE9e+iSHu2mOn8Z3CCHhoGoLFlYVG79v0U+8BAM+TbacMw8ELntHYl/BHwyhOj9v480Ic0CUFjaxG5YxfwcuziqHE3lMmlw9LKmI=
+  - secure: qTMLFO3B3ZhLmaYpbr8HMd3Mv9LtiCl2W7frkWt2aTPF7mfA3V1360BDMbm0UtKq1Mhw12FJ73bk+GYAQF8U06vYWXsk4tsyA3Hb6SAl/mpO5MbK2K0sol7KQoKqpfTUNd43inQhngyBy3Px/eHcVvHmhsfa8NdsdiMyc2hM6io=
+after_success:
+- .utility/push-javadoc-to-gh-pages.sh
