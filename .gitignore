@@ -1,7 +1,7 @@
 /.idea
 uber-java-client.iml
 /target
-/src/test/resources/uber.properties
+src/test/resources/uber.properties
 .DS_Store
 /build
 /.gradle
