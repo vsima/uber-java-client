@@ -32,21 +32,17 @@ public class UberClientTest {
 
         String serverToken = null;
 
-        InputStream is = getClass().getResourceAsStream("/test.properties");
+        InputStream is = getClass().getResourceAsStream("/locations.properties");
         if (is != null) {
             Properties props = new Properties();
             props.load(is);
 
-            serverToken = props.getProperty("uber_server_token");
-            assertNotNull("uber_server_token property is null. Make sure you have a test.properties file in " +
-                    "/src/test/resources/ directory.", serverToken);
-
             latitude = props.getProperty("uber_product_latitude");
-            assertNotNull("uber_product_latitude property is null. Make sure you have a test.properties file in " +
+            assertNotNull("uber_product_latitude property is null. Make sure you have a location.properties file in " +
                     "/src/test/resources/ directory.", latitude);
 
             longitude = props.getProperty("uber_product_longitude");
-            assertNotNull("uber_product_longitude property is null. Make sure you have a test.properties file in " +
+            assertNotNull("uber_product_longitude property is null. Make sure you have a location.properties file in " +
                     "/src/test/resources/ directory.", longitude);
 
 
@@ -55,7 +51,6 @@ public class UberClientTest {
             endLatitude = props.getProperty("uber_price_end_latitude");
             endLongitude = props.getProperty("uber_price_end_longitude");
         } else {
-            serverToken = System.getenv("uber_server_token");
             latitude = System.getenv("uber_product_latitude");
             longitude = System.getenv("uber_product_longitude");
             startLatitude = System.getenv("uber_price_start_latitude");
@@ -64,6 +59,18 @@ public class UberClientTest {
             endLongitude = System.getenv("uber_price_end_longitude");
         }
 
+
+        InputStream is2 = getClass().getResourceAsStream("/uber.properties");
+        if (is2 != null) {
+            Properties props = new Properties();
+            props.load(is2);
+
+            serverToken = props.getProperty("uber_server_token");
+            assertNotNull("uber_server_token property is null. Make sure you have an uber.properties file in " +
+                    "/src/test/resources/ directory.", serverToken);
+        } else {
+            serverToken = System.getenv("uber_server_token");
+        }
         client = new UberClient("v1", "", "", null, RestAdapter.LogLevel.FULL);
         client.setServerToken(serverToken);
     }
