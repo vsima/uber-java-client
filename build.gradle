@@ -61,10 +61,10 @@ uploadArchives {
       }
 
       snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots') {
-        if (!ossrhUsername) {
+        if (!hasProperty('ossrhUsername')) {
             ossrhUsername = System.getenv('ossrhUsername')
         }
-        if (!ossrhPassword) {
+        if (!hasProperty('ossrhPassword')) {
             ossrhUsername = System.getenv('ossrhUsername')
         }
         authentication(userName: ossrhUsername, password: ossrhPassword)
