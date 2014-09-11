@@ -1,15 +1,9 @@
 /.idea
 uber-java-client.iml
 /target
-/src/test/resources/test.properties
+src/test/resources/uber.properties
 .DS_Store
 /build
 /.gradle
 gradle.properties
-
-Example/android/.gradle
-Example/android/UberTestApp/local.properties
-Example/android/UberTestApp/app/uber.properties
-Example/android/UberTestApp/.idea
-Example/android/UberTestApp/UberTestApp.iml
 
