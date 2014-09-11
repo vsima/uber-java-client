@@ -56,11 +56,17 @@ uploadArchives {
     mavenDeployer {
       beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-      repository(url: ossrhRepositoryUrl) {
+      repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
         authentication(userName: ossrhUsername, password: ossrhPassword)
       }
 
-      snapshotRepository(url: ossrhSnapshotRepositoryUrl) {
+      snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots') {
+        if (!ossrhUsername) {
+            ossrhUsername = System.getenv('ossrhUsername')
+        }
+        if (!ossrhPassword) {
+            ossrhUsername = System.getenv('ossrhUsername')
+        }
         authentication(userName: ossrhUsername, password: ossrhPassword)
       }
 
@@ -85,9 +91,9 @@ uploadArchives {
 
         developers {
           developer {
-            id ossrhDevId
-            name ossrhDevName
-            email ossrhDevEmail
+            id 'vsima'
+            name 'Victor Sima'
+            email 'vic.sima@gmail.com'
           }
         }
       }
