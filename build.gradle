@@ -51,54 +51,50 @@ signing {
     sign configurations.archives
 }
 
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
 
-        if (!hasProperty('ossrhUsername')) {
-            ossrhUsername = System.getenv('ossrhUsername')
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots') {
+
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom.project {
+                    name 'Uber java REST Api client'
+                    packaging 'jar'
+                    description 'uber-java-client'
+                    url 'https://github.com/vsima/uber-java-client'
+
+                    scm {
+                        connection 'scm:git:git@github.com:vsima/uber-java-client.git'
+                        developerConnection 'scm:git:git@github.com:vsima/uber-java-client.git'
+                        url 'git@github.com:vsima/uber-java-client.git'
+                    }
+
+                    licenses {
+                        license {
+                            name 'The MIT License (MIT)'
+                            url 'http://opensource.org/licenses/MIT'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'vsima'
+                            name 'Victor Sima'
+                            email 'vic.sima@gmail.com'
+                        }
+                    }
+                }
+            }
         }
-        if (!hasProperty('ossrhPassword')) {
-            ossrhUsername = System.getenv('ossrhUsername')
-        }
-
-      repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-
-      snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots') {
-
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-
-      pom.project {
-        name 'Uber java REST Api client'
-        packaging 'jar'
-        description 'uber-java-client'
-        url 'https://github.com/vsima/uber-java-client'
-
-        scm {
-          connection 'scm:git:git@github.com:vsima/uber-java-client.git'
-          developerConnection 'scm:git:git@github.com:vsima/uber-java-client.git'
-          url 'git@github.com:vsima/uber-java-client.git'
-        }
-
-        licenses {
-          license {
-            name 'The MIT License (MIT)'
-            url 'http://opensource.org/licenses/MIT'
-          }
-        }
-
-        developers {
-          developer {
-            id 'vsima'
-            name 'Victor Sima'
-            email 'vic.sima@gmail.com'
-          }
-        }
-      }
     }
-  }
 }
