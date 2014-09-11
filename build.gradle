@@ -47,8 +47,10 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-signing {
-    sign configurations.archives
+if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
+    signing {
+        sign configurations.archives
+    }
 }
 
 if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
