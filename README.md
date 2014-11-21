@@ -46,12 +46,15 @@ client.getApiService().getProducts(40.74844, -73.985664, new Callback<Products>(
 
 Testing
 --------
-  * rename src/test/resources/_uber.properties to uber.properties and populate your Uber api keys
-  * run ./gradlew test
+Tests run against a mock api server.
+
+```shell
+./gradlew test
+```
  
 Contributors
 ------------
-  * Join the crew! Pull requests are welcome.
+  * Pull requests are welcome.
 
 License
 -------------

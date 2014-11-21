@@ -6,4 +6,4 @@ src/test/resources/uber.properties
 /build
 /.gradle
 gradle.properties
-
+local.properties

@@ -30,7 +30,6 @@ public class UberClientTest {
     @Before
     public void setup() throws Exception {
 
-        String serverToken = null;
 
         InputStream is = getClass().getResourceAsStream("/locations.properties");
         if (is != null) {
@@ -45,22 +44,16 @@ public class UberClientTest {
             assertNotNull("uber_product_longitude property is null. Make sure you have a location.properties file in " +
                     "/src/test/resources/ directory.", longitude);
 
-
             startLatitude = props.getProperty("uber_price_start_latitude");
             startLongitude = props.getProperty("uber_price_start_longitude");
             endLatitude = props.getProperty("uber_price_end_latitude");
             endLongitude = props.getProperty("uber_price_end_longitude");
-        } else {
-            latitude = System.getenv("uber_product_latitude");
-            longitude = System.getenv("uber_product_longitude");
-            startLatitude = System.getenv("uber_price_start_latitude");
-            startLongitude = System.getenv("uber_price_start_longitude");
-            endLatitude = System.getenv("uber_price_end_latitude");
-            endLongitude = System.getenv("uber_price_end_longitude");
         }
 
-
         InputStream is2 = getClass().getResourceAsStream("/uber.properties");
+        String serverToken;
+        boolean useMockServer = true;
+
         if (is2 != null) {
             Properties props = new Properties();
             props.load(is2);
@@ -68,11 +61,21 @@ public class UberClientTest {
             serverToken = props.getProperty("uber_server_token");
             assertNotNull("uber_server_token property is null. Make sure you have an uber.properties file in " +
                     "/src/test/resources/ directory.", serverToken);
+            useMockServer = Boolean.parseBoolean(props.getProperty("user_mock_server", "true"));
         } else {
+            //get token from CI ENV
             serverToken = System.getenv("uber_server_token");
         }
-        client = new UberClient("v1", "", "", null, RestAdapter.LogLevel.FULL);
-        client.setServerToken(serverToken);
+
+        if (useMockServer) {
+            client = new UberClient("v1", "", "", new MockApiClient(), RestAdapter.LogLevel.FULL);
+        } else  {
+            client = new UberClient("v1", "", "", null, RestAdapter.LogLevel.FULL);
+        }
+
+        if (serverToken != null) {
+            client.setServerToken(serverToken);
+        }
     }
 
     @After
@@ -96,7 +99,6 @@ public class UberClientTest {
                 Double.parseDouble(endLatitude),
                 Double.parseDouble(endLongitude));
 
-
         assertNotNull("get price estimates response is null", prices);
         assertNotNull("price estimates list is null", prices.getPrices());
     }
@@ -109,7 +111,6 @@ public class UberClientTest {
                 Double.parseDouble(startLongitude),
                 null,
                 null);
-
 
         assertNotNull("get time estimates response is null", times);
         assertNotNull("time estimates list is null", times.getTimes());
