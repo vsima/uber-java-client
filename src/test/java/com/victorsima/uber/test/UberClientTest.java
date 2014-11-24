@@ -3,6 +3,7 @@ package com.victorsima.uber.test;
 import com.victorsima.uber.UberClient;
 import com.victorsima.uber.model.Prices;
 import com.victorsima.uber.model.Products;
+import com.victorsima.uber.model.Promotion;
 import com.victorsima.uber.model.Times;
 import org.junit.After;
 import org.junit.Before;
@@ -29,7 +30,6 @@ public class UberClientTest {
 
     @Before
     public void setup() throws Exception {
-
 
         InputStream is = getClass().getResourceAsStream("/locations.properties");
         if (is != null) {
@@ -114,5 +114,17 @@ public class UberClientTest {
 
         assertNotNull("get time estimates response is null", times);
         assertNotNull("time estimates list is null", times.getTimes());
+    }
+
+    @Test
+    public void testPromotions() {
+        Promotion promotion = client.getApiService().getPromotions(
+                Double.parseDouble(startLatitude),
+                Double.parseDouble(startLongitude),
+                Double.parseDouble(endLatitude),
+                Double.parseDouble(endLongitude));
+        assertNotNull("promotion display text is null", promotion.getDisplayText());
+        assertNotNull("promotion localized value is null", promotion.getLocalizedValue());
+        assertNotNull("promotion type is null", promotion.getType());
     }
 }

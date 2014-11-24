@@ -36,6 +36,11 @@ public class MockApiClient implements Client {
              * {@link com.victorsima.uber.UberService#getProducts(double, double)}
              */
             responseString = "{\"products\":[{\"capacity\":4,\"image\":\"http:\\/\\/d1a3f4spazzrp4.cloudfront.net\\/car-types\\/mono\\/mono-uberx.png\",\"display_name\":\"uberX\",\"product_id\":\"b8e5c464-5de2-4539-a35a-986d6e58f186\",\"description\":\"The Low Cost Uber\"},{\"capacity\":6,\"image\":\"http:\\/\\/d1a3f4spazzrp4.cloudfront.net\\/car-types\\/mono\\/mono-uberxl2.png\",\"display_name\":\"uberXL\",\"product_id\":\"1e0ce2df-4a1e-4333-86dd-dc0c67aaabe1\",\"description\":\"low-cost rides for large groups\"},{\"capacity\":4,\"image\":\"http:\\/\\/d1a3f4spazzrp4.cloudfront.net\\/car-types\\/mono\\/mono-black.png\",\"display_name\":\"UberBLACK\",\"product_id\":\"0e9d8dd3-ffec-4c2b-9714-537e6174bb88\",\"description\":\"The original Uber\"},{\"capacity\":6,\"image\":\"http:\\/\\/d1a3f4spazzrp4.cloudfront.net\\/car-types\\/mono\\/mono-suv.png\",\"display_name\":\"UberSUV\",\"product_id\":\"56487469-0d3d-4f19-b662-234b7576a562\",\"description\":\"Room for everyone\"},{\"capacity\":1,\"image\":\"http:\\/\\/d1a3f4spazzrp4.cloudfront.net\\/car-types\\/mono\\/mono-nytaxi4.png\",\"display_name\":\"uberT\",\"product_id\":\"ebe413ab-cf49-465f-8564-a71119bfa449\",\"description\":\"Taxi and Boro-Taxi without the hassle\"}]}";
+        } else if (uri.getPath().equals("/v1/promotions") && "GET".equals(method)) {
+            /**
+             * {@link com.victorsima.uber.UberService#getPromotions(double, double, double, double)}
+             */
+            responseString = "{\"display_text\":\"Free ride up to $30\",\"localized_value\":\"$30\",\"type\":\"trip_credit\"}";
         }
 
             return new Response(uri.toString(), 200, "OK", new ArrayList<Header>(), new TypedByteArray("application/json", responseString.getBytes()));

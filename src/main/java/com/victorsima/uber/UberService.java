@@ -2,6 +2,7 @@ package com.victorsima.uber;
 
 import com.victorsima.uber.model.Prices;
 import com.victorsima.uber.model.Products;
+import com.victorsima.uber.model.Promotion;
 import com.victorsima.uber.model.Times;
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -73,7 +74,7 @@ public interface UberService {
      * @param startLongitude Longitude component.
      * @param customerUUID (optional) Unique customer identifier to be used for experience customization.
      * @param productId (optional) Unique identifier representing a specific product for a given latitude & longitude.
-     * @return
+     * @return Times
      */
     @GET("/estimates/time")
     Times getTimeEstimates(@Query("start_latitude") double startLatitude,
@@ -84,9 +85,35 @@ public interface UberService {
     /**
      * @see #getTimeEstimates(double, double, String, String)
      */
+    @GET("/estimates/time")
     void getTimeEstimates(@Query("start_latitude") double startLatitude,
                           @Query("start_longitude") double startLongitude,
                           @Query("customer_uuid") String customerUUID,
                           @Query("product_id") String productId,
                           Callback<Times> timesCallback);
+
+    /**
+     * The Promotions endpoint returns information about the promotion that will be available to a
+     * new user based on their activity's location. These promotions do not apply for existing users.
+     * @param startLatitude Latitude component of start location.
+     * @param startLongitude Longitude component of start location.
+     * @param endLatitude Latitude component of end location.
+     * @param endLongitude Longitude component of end location.
+     * @return Promotion
+     */
+    @GET("/promotions")
+    Promotion getPromotions(@Query("start_latitude") double startLatitude,
+                            @Query("start_longitude") double startLongitude,
+                            @Query("end_latitude") double endLatitude,
+                            @Query("end_longitude") double endLongitude);
+
+    /**
+     * @see #getPromotions(double, double, double, double)
+     */
+    @GET("/promotions")
+    void getPromotions(@Query("start_latitude") double startLatitude,
+                            @Query("start_longitude") double startLongitude,
+                            @Query("end_latitude") double endLatitude,
+                            @Query("end_longitude") double endLongitude,
+                            Callback<Promotion> promotionCallback);
 }
