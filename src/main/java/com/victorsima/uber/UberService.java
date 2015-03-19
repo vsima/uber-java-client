@@ -1,9 +1,6 @@
 package com.victorsima.uber;
 
-import com.victorsima.uber.model.Prices;
-import com.victorsima.uber.model.Products;
-import com.victorsima.uber.model.Promotion;
-import com.victorsima.uber.model.Times;
+import com.victorsima.uber.model.*;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Header;
@@ -116,4 +113,17 @@ public interface UberService {
                             @Query("end_latitude") double endLatitude,
                             @Query("end_longitude") double endLongitude,
                             Callback<Promotion> promotionCallback);
+
+    /**
+     * The User Profile endpoint returns information about the Uber user that has authorized with the application.
+     *
+     * @return UserProfile
+     */
+    @GET("/me")
+    UserProfile getMe();
+    /**
+     * @see #getMe()
+     */
+    @GET("/me")
+    void getMe(Callback<UserProfile> userProfileCallback);
 }

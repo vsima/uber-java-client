@@ -1,10 +1,7 @@
 package com.victorsima.uber.test;
 
 import com.victorsima.uber.UberClient;
-import com.victorsima.uber.model.Prices;
-import com.victorsima.uber.model.Products;
-import com.victorsima.uber.model.Promotion;
-import com.victorsima.uber.model.Times;
+import com.victorsima.uber.model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -126,5 +123,14 @@ public class UberClientTest {
         assertNotNull("promotion display text is null", promotion.getDisplayText());
         assertNotNull("promotion localized value is null", promotion.getLocalizedValue());
         assertNotNull("promotion type is null", promotion.getType());
+    }
+
+    @Test
+    public void testUserProfile() {
+        UserProfile userProfile = client.getApiService().getMe();
+        assertNotNull("user first name is null", userProfile.getFirstName());
+        assertNotNull("user last name is null", userProfile.getLastName());
+        assertNotNull("user uuid is null", userProfile.getUuid());
+        assertNotNull("user promo code is null", userProfile.getPromoCode());
     }
 }

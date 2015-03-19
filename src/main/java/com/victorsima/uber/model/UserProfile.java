@@ -27,6 +27,10 @@ public class UserProfile {
     @SerializedName("promo_code")
     private String promoCode;
 
+    @Expose
+    @SerializedName("uuid")
+    private String uuid;
+
     public String getFirstName() {
         return firstName;
     }
@@ -65,5 +69,13 @@ public class UserProfile {
 
     public void setPromoCode(String promoCode) {
         this.promoCode = promoCode;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

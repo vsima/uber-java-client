@@ -41,6 +41,15 @@ public class MockApiClient implements Client {
              * {@link com.victorsima.uber.UberService#getPromotions(double, double, double, double)}
              */
             responseString = "{\"display_text\":\"Free ride up to $30\",\"localized_value\":\"$30\",\"type\":\"trip_credit\"}";
+        } else if (uri.getPath().equals("/v1/me") && "GET".equals(method)) {
+            responseString = "{\n" +
+                    "  \"first_name\": \"Uber\",\n" +
+                    "  \"last_name\": \"Developer\",\n" +
+                    "  \"email\": \"developer@uber.com\",\n" +
+                    "  \"picture\": \"https://...\",\n" +
+                    "  \"promo_code\": \"teypo\",\n" +
+                    "  \"uuid\": \"91d81273-45c2-4b57-8124-d0165f8240c0\"\n" +
+                    "}";
         }
 
             return new Response(uri.toString(), 200, "OK", new ArrayList<Header>(), new TypedByteArray("application/json", responseString.getBytes()));
