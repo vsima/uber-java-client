@@ -1,8 +1,19 @@
 language: java
 jdk:
-- oraclejdk7
+  - oraclejdk7
+cache:
+  directories:
+    - $HOME/.m2
+
+script:
+  - "./gradlew test testSandbox"
 env:
   global:
   - secure: eEypfjZZdSKGlLSRGb4M8XV4x45BE8P5NfdVBmiulidS3E0Yf+LFRuQH66vnLhGcC11JBjYQ3hQg8OdHqgVrGCCmbeeNxOiQ2NdpCQGpF232BqmQCVZz3UodFeygpDzcekGax4/UH8TwVFTJXmTMI+w648HCN3/c9i/aXFMmHxY=
   - secure: uQL3+Kn7RWmJ5o2/oNuYElhrcI6A83ffTTRb0iCZiSNo2TSkgtk6etnoBV4TGQHL2e8LOslohfNSSOwg7CUj8R4BjTtNuRQsu9cufvZ/EZA/Zcii8EJt50j9d6Fi2u8ER/Wi/zVfKfLWdfZt6SZrCJalDhIUkud7y4ppWoLRWUY=
   - secure: qOwgYxO+kEeEf9/hNBlgSxtZRSajevKbr8H1MgVbTJpsFbnzTNybbyDqYNynOgWrDHQjMNiHB6g9zq8agFBL24Und/xlwXOYWHxrvBnxL789nKr0NdXmzHQ1RVuPhVvUZZr7w3g411c9DnvFUd3+XYlRzcW0VY2duY3rKVFbihU=
+  - secure: W/kmOnMHnXSK9gT/xfryib18LOOobtq5I/GwW2jyXms2as3hcnshsIHWM0ovQg17/xhsspphpEAMC/8ff1FGu8Q4+tY31I6cR9JcCmYWk3fxim4pyCRRsgbwb4PpU8HSxvNBJpKtLVeY+024YqYNvk9BqhXKLU2qHSn9GMLQ9+8=
+  - secure: w0AvE7TahsBcc6yB2NH8YUsqVjmCB5B2o08AT/oUKP86vr39pSJ22pop1Qa9J4LXjKtt4k8ijvdY//y8+hW13YCb+zVIlOsEMuAEO1HW6XwTKuhM1SsgArjgb40uq6Ai+TNHEUFmma/cYhZSI7Ek0Kg9g2M7tAcwsScXO/ekLfo=
+  - secure: I0gQODkKuKk9hMNJO/PY10Wpt2wYGhLVC3v+vkymOJgP4YYcLQEoTsQxIlSS7Q5dIVFLL8NpDIazg/lLq2GCg0rEtgue90jbomvtiwJi9WN/MGw4A5PeHGsRlncJ0fRHYKCUYAZvjmdaFns02BsERLx3OmSWKfTNzBMCybkVs8I=
+  - secure: tJXU3nDi2jyexbxTNWaS/CLscWP9oGff45wJTnx28NZLeknQWBmBaqRcArdQ39Kaq6FHSzn2e9NjPZK+V+OI/USASRuESmSMaWvzegZNOhhgP7eZABwMveSsJOecAe/vVmCxORVyocKaVheKtd0qikjh2iPY3ikelijOA56Bjmo=
+  - secure: q7W1KiXsQRzMiwMmZuxOv+AspDVJBl50NW8LwTLDpGfhZ/66Zfdk0JLjK2mVqo5UtEb+YiDPTRi1wzr8dc9c3CYmZEhwpO1Rdk+3qVzEQXfPX5YwG1Yt6SyW9pLLgWoh4BGQM/Y1MYuWJKW7sn+vTziVnpsMXM902RMMngskeEQ=

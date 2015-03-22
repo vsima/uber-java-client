@@ -18,10 +18,13 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     //compile 'com.netflix.rxjava:rxjava-core:0.17.0'
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'net.sourceforge.htmlunit:htmlunit:2.15'
 }
 test {
+    scanForTestClasses false
+    include '**/MockServerTestSuite.class'
     testLogging {
-        events 'started', 'passed'
+        events 'started', 'passed', 'failed', 'skipped'
     }
 }
 jacocoTestReport {
@@ -32,7 +35,13 @@ jacocoTestReport {
     }
 }
 
-
+task testSandbox(type: Test) {
+    scanForTestClasses false
+    include '**/SandboxServerTestSuite.class'
+    testLogging {
+        events 'started', 'passed', 'failed', 'skipped'
+    }
+}
 
 task javadocJar(type: Jar) {
     classifier = 'javadoc'

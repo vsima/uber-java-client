@@ -19,9 +19,11 @@ public class UberClient {
 
     private static final String oAuthUri = "https://login.uber.com";
     private static final String apiUri = "https://api.uber.com";
+    private static final String sandboxApiUri = "https://sandbox-api.uber.com";
 
     private String version;
     private String accessToken;
+    private String refreshToken;
     private String serverToken;
     private String clientId;
     private String clientSecret;
@@ -30,29 +32,29 @@ public class UberClient {
     private UberAuthService authService;
     private Gson gson;
 
-    /**
-     * Constructor
-     *
-     * @param version
-     * @param clientId
-     * @param clientSecret
-     * @param logLevel
-     */
-    public UberClient(String version, String clientId, String clientSecret, RestAdapter.LogLevel logLevel) {
-        this(version, clientId, clientSecret, null, null, logLevel);
-    }
-
-    /**
-     * Constructor
-     * @param version
-     * @param clientId
-     * @param clientSecret
-     * @param client
-     * @param logLevel
-     */
-    public UberClient(String version, String clientId, String clientSecret, Client client, RestAdapter.LogLevel logLevel) {
-        this(version, clientId, clientSecret, null, client, logLevel);
-    }
+//    /**
+//     * Constructor
+//     *
+//     * @param version
+//     * @param clientId
+//     * @param clientSecret
+//     * @param logLevel
+//     */
+//    public UberClient(String version, String clientId, String clientSecret, RestAdapter.LogLevel logLevel) {
+//        this(version, clientId, clientSecret, null, null, false, logLevel);
+//    }
+//
+//    /**
+//     * Constructor
+//     * @param version
+//     * @param clientId
+//     * @param clientSecret
+//     * @param client
+//     * @param logLevel
+//     */
+//    public UberClient(String version, String clientId, String clientSecret, Client client, RestAdapter.LogLevel logLevel) {
+//        this(version, clientId, clientSecret, null, client, false, logLevel);
+//    }
 
     /**
      * Constructor
@@ -63,7 +65,7 @@ public class UberClient {
      * @param client
      * @param logLevel
      */
-    public UberClient(String version, String clientId, String clientSecret, String clientRedirectUri, Client client, RestAdapter.LogLevel logLevel) {
+    public UberClient(String version, String clientId, String clientSecret, String clientRedirectUri, Client client, boolean useSandbox, RestAdapter.LogLevel logLevel) {
         this.version = version;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
@@ -76,7 +78,7 @@ public class UberClient {
         gson = gsonBuilder.create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(apiUri + "/" + version)
+                .setEndpoint((useSandbox ? sandboxApiUri : apiUri) + "/" + version)
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade requestFacade) {
@@ -142,8 +144,19 @@ public class UberClient {
         this.serverToken = serverToken;
     }
 
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
     public UberService getApiService() {
         return apiService;
+    }
+    public UberAuthService getAuthService() {
+        return authService;
     }
 
     public String getClientRedirectUri() {

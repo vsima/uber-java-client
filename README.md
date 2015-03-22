@@ -46,10 +46,16 @@ client.getApiService().getProducts(40.74844, -73.985664, new Callback<Products>(
 
 Testing
 --------
-Tests run against a mock api server.
+To run tests against a mock api server:
 
 ```shell
 ./gradlew test
+```
+
+To run tests against the uber sandbox server (First populate uber.properties with your own info):
+
+```shell
+./gradlew testSandbox
 ```
  
 Contributors

@@ -27,4 +27,20 @@ public interface UberAuthService {
                             @Query("redirect_uri") String redirectUri,
                             Callback<AccessToken> callback);
 
+    /**
+     *
+     * @param clientId
+     * @param clientSecret
+     * @param authorizationCode
+     * @param grantType
+     * @param redirectUri
+     * @return
+     */
+    @POST("/oauth/token")
+    AccessToken requestAccessToken(@Query("client_id") String clientId,
+                            @Query("client_secret") String clientSecret,
+                            @Query("code") String authorizationCode,
+                            @Query("grant_type") String grantType,
+                            @Query("redirect_uri") String redirectUri);
+
 }

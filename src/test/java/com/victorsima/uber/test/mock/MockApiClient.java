@@ -1,4 +1,4 @@
-package com.victorsima.uber.test;
+package com.victorsima.uber.test.mock;
 
 import java.io.IOException;
 import java.net.URI;
