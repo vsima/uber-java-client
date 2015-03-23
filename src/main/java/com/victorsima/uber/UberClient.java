@@ -6,6 +6,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.victorsima.uber.exception.ForbiddenException;
 import com.victorsima.uber.exception.UnauthorizedException;
 import com.victorsima.uber.model.AccessToken;
+import com.victorsima.uber.model.sandbox.SandboxService;
 import retrofit.*;
 import retrofit.client.Client;
 import retrofit.client.OkClient;
@@ -30,6 +31,7 @@ public class UberClient {
     private String clientRedirectUri;
     private UberService apiService;
     private UberAuthService authService;
+    private SandboxService sandboxService;
     private Gson gson;
 
 //    /**
@@ -40,7 +42,7 @@ public class UberClient {
 //     * @param clientSecret
 //     * @param logLevel
 //     */
-//    public UberClient(String version, String clientId, String clientSecret, RestAdapter.LogLevel logLevel) {
+//    public UberClient(String version, String clientId, String clientSecret, String clientRedirectUri, RestAdapter.LogLevel logLevel) {
 //        this(version, clientId, clientSecret, null, null, false, logLevel);
 //    }
 //
@@ -52,7 +54,7 @@ public class UberClient {
 //     * @param client
 //     * @param logLevel
 //     */
-//    public UberClient(String version, String clientId, String clientSecret, Client client, RestAdapter.LogLevel logLevel) {
+//    public UberClient(String version, String serverToken, RestAdapter.LogLevel logLevel) {
 //        this(version, clientId, clientSecret, null, client, false, logLevel);
 //    }
 
@@ -100,7 +102,7 @@ public class UberClient {
                             case 403: //Forbidden
                                 return new ForbiddenException();
                         }
-                        return null;
+                        return retrofitError;
                     }
                 })
                 .setLogLevel(logLevel)
@@ -109,14 +111,18 @@ public class UberClient {
                 .build();
 
         apiService = restAdapter.create(UberService.class);
+        if (useSandbox) {
+            sandboxService = restAdapter.create(SandboxService.class);
+        }
 
         RestAdapter authRestAdapter = new RestAdapter.Builder()
                 .setEndpoint(oAuthUri)
                 .setLogLevel(logLevel)
                 .setClient(client == null ? new OkClient(okHttpClient) : client)
-                .setConverter(new GsonConverter(gsonBuilder.create()))
+                .setConverter(new GsonConverter(gson))
                 .build();
         authService = authRestAdapter.create(UberAuthService.class);
+
     }
 
     public boolean hasAccessToken() {
@@ -167,17 +173,36 @@ public class UberClient {
         this.clientRedirectUri = clientRedirectUri;
     }
 
+    public SandboxService getSandboxService() {
+        return sandboxService;
+    }
+
+    public Gson getGson() {
+        return gson;
+    }
 
     //*************
-    // oAuth helpers
+    // OAuth helpers
     //*************
 
     /**
      * Creates the url used in the initial oAuth flow. Put this url in to a webview.
      * @return oauth authorize url
      */
-    public String getAuthorizeUrl(){
-        return oAuthUri + "/oauth/authorize?response_type=code&client_id=" + this.clientId;
+    public String getAuthorizeUrl(String[] scope){
+        StringBuilder sb = new StringBuilder(oAuthUri);
+        sb.append("/oauth/authorize?response_type=code");
+        sb.append("&client_id=" + this.clientId);
+        if (scope != null) {
+            sb.append("&scope=");
+            for (int i = 0; i < scope.length; i++) {
+                if (i > 0) {
+                    sb.append("%20");
+                }
+                sb.append(scope[i]);
+            }
+        }
+        return sb.toString();
     }
 
     /**
@@ -189,19 +214,19 @@ public class UberClient {
         return redirectUri.replace(clientRedirectUri + "?code=", "");
     }
 
-    public void requestAccessToken(String authorizationCode, final Callback<AccessToken> callback) {
-        authService.requestAccessToken(clientId, clientSecret, authorizationCode, "authorization_code",
-                clientRedirectUri, new Callback<AccessToken>() {
-            @Override
-            public void success(AccessToken accessToken, Response response) {
-                UberClient.this.accessToken = accessToken.getAccessToken();
-                callback.success(accessToken, response);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                failure(error);
-            }
-        });
-    }
+//    public void requestAccessToken(String authorizationCode, final Callback<AccessToken> callback) {
+//        authService.requestAccessToken(clientId, clientSecret, authorizationCode, "authorization_code",
+//                clientRedirectUri, new Callback<AccessToken>() {
+//            @Override
+//            public void success(AccessToken accessToken, Response response) {
+//                UberClient.this.accessToken = accessToken.getAccessToken();
+//                callback.success(accessToken, response);
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                failure(error);
+//            }
+//        });
+//    }
 }

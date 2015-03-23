@@ -1,9 +1,6 @@
 package com.victorsima.uber.test;
 
-import com.victorsima.uber.model.*;
 import org.junit.*;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -23,4 +20,6 @@ public class MockServerTest extends BaseTest {
     public boolean runUsingSandboxServer() {
         return false;
     }
+
+
 }

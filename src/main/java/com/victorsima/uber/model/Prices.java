@@ -10,7 +10,6 @@ import java.util.List;
  */
 public class Prices {
 
-
     @Expose
     @SerializedName("prices")
     private List<Price> prices;

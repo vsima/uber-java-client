@@ -11,6 +11,10 @@ import retrofit.http.Query;
  */
 public interface UberAuthService {
 
+    public static final String SCOPE_PROFILE = "profile";
+    public static final String SCOPE_HISTORY_LITE = "history_lite";
+    public static final String SCOPE_REQUEST = "request";
+
     /**
      *
      * @param clientId

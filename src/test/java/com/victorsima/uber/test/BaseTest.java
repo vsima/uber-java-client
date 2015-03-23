@@ -2,10 +2,10 @@ package com.victorsima.uber.test;
 
 import com.victorsima.uber.UberClient;
 import com.victorsima.uber.model.*;
+import com.victorsima.uber.model.request.Request;
+import com.victorsima.uber.model.request.RequestBody;
 import com.victorsima.uber.test.mock.MockApiClient;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 import retrofit.RestAdapter;
 
@@ -101,9 +101,9 @@ public abstract class BaseTest {
 
     protected void initClient(boolean useSandboxServer) {
         if (useSandboxServer) {
-            client = new UberClient("v1", clientId, clientSecret, redirectUrl, null, true, RestAdapter.LogLevel.FULL);
+            client = new UberClient("v1", clientId, clientSecret, redirectUrl, null, useSandboxServer, RestAdapter.LogLevel.FULL);
         } else  {
-            client = new UberClient("v1", "", "", "", new MockApiClient(), false, RestAdapter.LogLevel.FULL);
+            client = new UberClient("v1", "", "", "", new MockApiClient(), useSandboxServer, RestAdapter.LogLevel.FULL);
         }
     }
 
@@ -137,7 +137,6 @@ public abstract class BaseTest {
     }
 
     protected void loadUberProperties() throws Exception {
-
         //CI
         if ("true".equals(System.getenv("CI"))) {
             serverToken = System.getenv("uber_server_token");

@@ -50,6 +50,29 @@ public class MockApiClient implements Client {
                     "  \"promo_code\": \"teypo\",\n" +
                     "  \"uuid\": \"91d81273-45c2-4b57-8124-d0165f8240c0\"\n" +
                     "}";
+        } else if (uri.getPath().equals("/v1/requests") && "POST".equals(method)) {
+            responseString = "{\n" +
+                    "   \"request_id\": \"852b8fdd-4369-4659-9628-e122662ad257\",\n" +
+                    "   \"status\": \"processing\",\n" +
+                    "   \"vehicle\": {\n" +
+                    "      \"make\":\"Bugatti\",\n" +
+                    "      \"model\":\"Veyron\",\n" +
+                    "      \"license_plate\":\"I<3Uber\",\n" +
+                    "      \"picture_url\":\"https:\\/\\/d1w2poirtb3as9.cloudfront.net\\/car.jpeg\"\n" +
+                    "   }," +
+                    "   \"driver\": {\n" +
+                    "      \"phone_number\":\"(555)555-5555\",\n" +
+                    "      \"rating\":5,\n" +
+                    "      \"picture_url\":\"https:\\/\\/d1w2poirtb3as9.cloudfront.net\\/img.jpeg\",\n" +
+                    "      \"name\":\"Bob\"\n" +
+                    "   }," +
+                    "   \"location\": {\n" +
+                    "      \"latitude\":37.776033,\n" +
+                    "      \"longitude\":-122.418143\n" +
+                    "   }," +
+                    "   \"eta\": 5,\n" +
+                    "   \"surge_multiplier\": 1.0\n" +
+                    "}";
         }
 
             return new Response(uri.toString(), 200, "OK", new ArrayList<Header>(), new TypedByteArray("application/json", responseString.getBytes()));

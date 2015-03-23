@@ -1,10 +1,12 @@
 package com.victorsima.uber;
 
+import com.squareup.okhttp.Response;
 import com.victorsima.uber.model.*;
+import com.victorsima.uber.model.request.Request;
+import com.victorsima.uber.model.request.RequestBody;
+import com.victorsima.uber.model.request.RequestMap;
 import retrofit.Callback;
-import retrofit.http.GET;
-import retrofit.http.Header;
-import retrofit.http.Query;
+import retrofit.http.*;
 
 /**
  * Uber Service interface
@@ -126,4 +128,55 @@ public interface UberService {
      */
     @GET("/me")
     void getMe(Callback<UserProfile> userProfileCallback);
+
+    /**
+     * <p>The Request endpoint allows a ride to be requested on behalf of an Uber user given their desired product,
+     * start, and end locations.</p>
+     *
+     * <p>Please review the Sandbox documentation on how to develop and test against these endpoints without making
+     * real-world Requests and being charged.</p>
+     *
+     * @param requestBody
+     * @return
+     */
+    @POST("/requests")
+    Request postRequest(@Body RequestBody requestBody);
+
+    /**
+     * @see #postRequest(com.victorsima.uber.model.request.RequestBody request)
+     */
+    @POST("/requests")
+    void postRequest(@Body RequestBody requestBody, Callback<Request> callback);
+
+
+    /**
+     * Get the real time status of an ongoing trip that was created using the Ride Request endpoint.
+     * @param requestId Unique identifier representing a Request.
+     * @return
+     */
+    @GET("/requests/{request_id}")
+    Request getRequestDetails(@Path("request_id") String requestId);
+
+    /**
+     *@see #getRequestDetails(String)
+     */
+    @GET("/requests/{request_id}")
+    void getRequestDetails(@Path("request_id") String requestId, Callback<Request> callback);
+
+    /**
+     * Cancel an ongoing Request on behalf of a rider
+     * @param requestId Unique identifier representing a Request.
+     * @return
+     */
+    @DELETE("/requests/{request_id}")
+    Response deleteRequest(@Path("request_id") String requestId);
+
+    /**
+     * @see #deleteRequest(String)
+     */
+    @DELETE("/requests/{request_id}")
+    void deleteRequest(@Path("request_id") String requestId, Callback<Response> callback);
+
+    @GET("/requests/{request_id}/map")
+    RequestMap getRequestMap(@Path("request_id") String requestId);
 }
