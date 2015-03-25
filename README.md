@@ -10,28 +10,31 @@ Download
 
 Download [the latest JAR][1] or grab via Gradle:
 ```groovy
-compile 'com.victorsima:uber-java-client:0.0.1'
+compile 'com.victorsima:uber-java-client:0.0.2'
 ```
 or Maven:
 ```xml
 <dependency>
   <groupId>com.victorsima</groupId>
   <artifactId>uber-java-client</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
 </dependency>
 ```
 
 Usage
 -----
 ```java
-UberClient client = new UberClient("v1", "YOUR_OAUTH_ID", "YOUR_OAUTH_SECRET", RestAdapter.LogLevel.BASIC);
-client.setServerToken("YOUR_SERVER_TOKEN");
+UberClient client = new UberClient("YOUR_OAUTH_ID", "YOUR_OAUTH_SECRET", "YOUR_OAUTH_REDIRECT_URI", RestAdapter.LogLevel.BASIC);
 ```
-####Synchronous api call
+
+```java
+UberClient client = new UberClient("YOUR_SERVER_TOKEN", RestAdapter.LogLevel.BASIC);
+```
+####Synchronous api call to products
 ```java
 Products products = client.getApiService().getProducts(40.74844,-73.985664);
 ```
-####Asynchronous api call
+####Asynchronous api call to products
 ```java
 client.getApiService().getProducts(40.74844, -73.985664, new Callback<Products>() {
   @Override
@@ -52,7 +55,7 @@ To run tests against a mock api server:
 ./gradlew test
 ```
 
-To run tests against the uber sandbox server (First populate uber.properties with your own info):
+To run tests against the uber sandbox server (First populate uber.properties with your own developer info):
 
 ```shell
 ./gradlew testSandbox
@@ -88,6 +91,6 @@ License
      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
      THE SOFTWARE.
  
- 
-[1]: http://repo1.maven.org/maven2/com/victorsima/uber-java-client/0.0.1/uber-java-client-0.0.1.jar
+
+[1]: http://repo1.maven.org/maven2/com/victorsima/uber-java-client/0.0.2/uber-java-client-0.0.2.jar
 

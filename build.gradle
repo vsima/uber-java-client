@@ -6,7 +6,7 @@ apply plugin: 'signing'
 sourceCompatibility = 1.7
 group = "com.victorsima"
 archivesBaseName = "uber-java-client"
-version = '0.0.2-SNAPSHOT'
+version = '0.0.2'
 
 repositories {
     mavenCentral()
