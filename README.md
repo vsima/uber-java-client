@@ -4,6 +4,19 @@ Uber API client for Android & Java
 
 A java wrapper for Uber's REST API for Android and Java applications. 
 
+Api calls implemented:
+- Request a Car
+- Request details
+- Cancel request
+- Request map
+- User Profile
+- User Activity (v1.1)
+- Product Types
+- Price Estimates
+- Time Estimates
+- Promotions
+- OAuth tokens (authorization code and refresh token)
+
 
 Download
 --------
@@ -24,27 +37,20 @@ or Maven:
 Usage
 -----
 ```java
-UberClient client = new UberClient("YOUR_OAUTH_ID", "YOUR_OAUTH_SECRET", "YOUR_OAUTH_REDIRECT_URI", RestAdapter.LogLevel.BASIC);
+UberClient client = new UberClient("YOUR_OAUTH_ID", "YOUR_OAUTH_SECRET", "YOUR_OAUTH_REDIRECT_URI", LogLevel.BASIC);
 ```
 
 ```java
-UberClient client = new UberClient("YOUR_SERVER_TOKEN", RestAdapter.LogLevel.BASIC);
+UberClient client = new UberClient("YOUR_SERVER_TOKEN", LogLevel.BASIC);
 ```
-####Synchronous api call to products
+Example
+-------
+
+**Request a car** (requires a valid oauth access token)
 ```java
 Products products = client.getApiService().getProducts(40.74844,-73.985664);
-```
-####Asynchronous api call to products
-```java
-client.getApiService().getProducts(40.74844, -73.985664, new Callback<Products>() {
-  @Override
-  public void success(Products products, Response response) {
-  }
-  
-  @Override
-  public void failure(RetrofitError error) {
-  }
-});
+String productId = products.getProducts().get(0).getProductId();
+Request request = client.getApiService().postRequest(new RequestBody(productId, 40.74844, -73.985664, 40.74844, -73.985664, null));
 ```
 
 Testing
@@ -55,7 +61,7 @@ To run tests against a mock api server:
 ./gradlew test
 ```
 
-To run tests against the uber sandbox server (First populate uber.properties with your own developer info):
+To run tests against the Uber's sandbox server, populate uber.properties with your own developer info.
 
 ```shell
 ./gradlew testSandbox
