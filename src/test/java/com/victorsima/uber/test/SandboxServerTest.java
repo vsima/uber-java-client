@@ -24,14 +24,13 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Collections;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests for requests using uber sandbox
  *
  */
+@SuppressWarnings("unchecked")
 public class SandboxServerTest extends BaseTest {
 
     private static final int delay = 3000;// use a delay to allow the PUT calls to take effect
@@ -48,6 +47,15 @@ public class SandboxServerTest extends BaseTest {
         if (!client.hasAccessToken()) {
             retrieveAccessToken();
         }
+    }
+
+    @Test
+    public void testAccessTokenRefresh() {
+        String oldAccessToken = client.getAccessToken();
+        AccessToken refreshedAccessToken = client.getAuthService().requestAccessToken(clientId, clientSecret,
+                client.getClientRedirectUri(), UberAuthService.GRANT_TYPE_REFRESH_TOKEN, null, client.getRefreshToken());
+        assertNotNull(refreshedAccessToken);
+        assertNotEquals("The access token was not refreshed", oldAccessToken, refreshedAccessToken.getAccessToken());
     }
 
     @Test
@@ -229,7 +237,7 @@ public class SandboxServerTest extends BaseTest {
                         int idx = nameValue.indexOf("=");
                         if ("code".equals(URLDecoder.decode(nameValue.substring(0, idx), "UTF-8"))) {
                             String authorizationCode = URLDecoder.decode(nameValue.substring(idx + 1), "UTF-8");
-                            AccessToken accessToken = client.getAuthService().requestAccessToken(clientId, clientSecret, authorizationCode, "authorization_code", redirectUrl);
+                            AccessToken accessToken = client.getAuthService().requestAccessToken(clientId, clientSecret, redirectUrl, UberAuthService.GRANT_TYPE_AUTHORIZATION_CODE, authorizationCode, null);
                             client.setAccessToken(accessToken.getAccessToken());
                             client.setRefreshToken(accessToken.getRefreshToken());
                             break;
@@ -253,7 +261,7 @@ public class SandboxServerTest extends BaseTest {
         webClient.getOptions().setUseInsecureSSL(true);
         webClient.getCookieManager().setCookiesEnabled(true);
 
-        String authUrl = client.getAuthorizeUrl(new String[] {UberAuthService.SCOPE_PROFILE, UberAuthService.SCOPE_HISTORY_LITE, UberAuthService.SCOPE_REQUEST});
+        String authUrl = Utils.generateAuthorizeUrl(client.getOAuthUri(), clientId, new String[]{UberAuthService.SCOPE_PROFILE, UberAuthService.SCOPE_HISTORY_LITE, UberAuthService.SCOPE_REQUEST});
         final HtmlPage loginPage = webClient.getPage(authUrl);
         final HtmlForm form = loginPage.getForms().get(0);
         final HtmlTextInput emailInputText = form.getInputByName("email");
@@ -263,9 +271,9 @@ public class SandboxServerTest extends BaseTest {
         passwordInputText.setText(password);
         final Page scopePage = submitButton.click();
         /**
-         * Ff the user already accepted scope permissions, the accept screen is skipped and we are redirected to the authorization code
+         * If the user already accepted scope permissions, the accept screen is skipped and the user will be forwarded to the authorization code redirect
          */
-        //check for Accept html page
+        //check for the Accept html page
         if (scopePage instanceof HtmlPage) {
             //click accept button
             final HtmlForm form2 = ((HtmlPage)scopePage).getForms().get(0);

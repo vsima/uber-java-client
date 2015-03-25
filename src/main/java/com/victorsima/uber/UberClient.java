@@ -36,29 +36,27 @@ public class UberClient {
     private SandboxService sandboxService;
     private Gson gson;
 
-//    /**
-//     * Constructor
-//     *
-//     * @param version
-//     * @param clientId
-//     * @param clientSecret
-//     * @param logLevel
-//     */
-//    public UberClient(String version, String clientId, String clientSecret, String clientRedirectUri, RestAdapter.LogLevel logLevel) {
-//        this(version, clientId, clientSecret, null, null, false, logLevel);
-//    }
-//
-//    /**
-//     * Constructor
-//     * @param version
-//     * @param clientId
-//     * @param clientSecret
-//     * @param client
-//     * @param logLevel
-//     */
-//    public UberClient(String version, String serverToken, RestAdapter.LogLevel logLevel) {
-//        this(version, clientId, clientSecret, null, client, false, logLevel);
-//    }
+    /**
+     * Constructor
+     *
+     * @param clientId
+     * @param clientSecret
+     * @param clientRedirectUri
+     * @param logLevel
+     */
+    public UberClient(String clientId, String clientSecret, String clientRedirectUri, RestAdapter.LogLevel logLevel) {
+        this(clientId, clientSecret, clientRedirectUri, null, null, false, logLevel);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param serverToken
+     * @param logLevel
+     */
+    public UberClient(String serverToken, RestAdapter.LogLevel logLevel) {
+        this(null, null, null, null, null, false, logLevel);
+    }
 
     /**
      * Constructor
@@ -68,10 +66,11 @@ public class UberClient {
      * @param client
      * @param logLevel
      */
-    public UberClient(String clientId, String clientSecret, String clientRedirectUri, Client client, boolean useSandbox, RestAdapter.LogLevel logLevel) {
+    public UberClient(String clientId, String clientSecret, String clientRedirectUri, String serverToken, Client client, boolean useSandbox, RestAdapter.LogLevel logLevel) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.clientRedirectUri = clientRedirectUri;
+        this.serverToken = serverToken;
 
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
@@ -90,10 +89,10 @@ public class UberClient {
                     public void intercept(RequestFacade requestFacade) {
 
                         if (hasAccessToken()) {
-                            requestFacade.addHeader("Authorization", "Bearer " + accessToken);
+                            requestFacade.addHeader("Authorization", "Bearer " + getAccessToken());
                             return;
                         } else if (hasServerToken()) {
-                            requestFacade.addHeader("Authorization", "Token " + serverToken);
+                            requestFacade.addHeader("Authorization", "Token " + getServerToken());
                         }
                     }
                 })
@@ -165,6 +164,7 @@ public class UberClient {
     public UberService getApiService() {
         return apiService;
     }
+
     public UberAuthService getAuthService() {
         return authService;
     }
@@ -181,56 +181,11 @@ public class UberClient {
         return sandboxService;
     }
 
+    public String getOAuthUri() {
+        return oAuthUri;
+    }
+
     public Gson getGson() {
         return gson;
     }
-
-    //*************
-    // OAuth helpers
-    //*************
-
-    /**
-     * Creates the url used in the initial oAuth flow. Put this url in to a webview.
-     * @return oauth authorize url
-     */
-    public String getAuthorizeUrl(String[] scope){
-        StringBuilder sb = new StringBuilder(oAuthUri);
-        sb.append("/oauth/authorize?response_type=code");
-        sb.append("&client_id=" + this.clientId);
-        if (scope != null) {
-            sb.append("&scope=");
-            for (int i = 0; i < scope.length; i++) {
-                if (i > 0) {
-                    sb.append("%20");
-                }
-                sb.append(scope[i]);
-            }
-        }
-        return sb.toString();
-    }
-
-    /**
-     * Method to parse the authorization code from a redirect url
-     * @param redirectUri
-     * @return authorization code
-     */
-    public String parseAuthorizationCode(String redirectUri) {
-        return redirectUri.replace(clientRedirectUri + "?code=", "");
-    }
-
-//    public void requestAccessToken(String authorizationCode, final Callback<AccessToken> callback) {
-//        authService.requestAccessToken(clientId, clientSecret, authorizationCode, "authorization_code",
-//                clientRedirectUri, new Callback<AccessToken>() {
-//            @Override
-//            public void success(AccessToken accessToken, Response response) {
-//                UberClient.this.accessToken = accessToken.getAccessToken();
-//                callback.success(accessToken, response);
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                failure(error);
-//            }
-//        });
-//    }
 }

@@ -29,7 +29,7 @@ public abstract class BaseTest {
     protected String username, password;
 
     /**
-     *
+     * Return true to use the sandbox server, false to use the mock server
      * @return
      */
     public abstract boolean runUsingSandboxServer();
@@ -101,9 +101,9 @@ public abstract class BaseTest {
 
     protected void initClient(boolean useSandboxServer) {
         if (useSandboxServer) {
-            client = new UberClient(clientId, clientSecret, redirectUrl, null, useSandboxServer, RestAdapter.LogLevel.FULL);
+            client = new UberClient(clientId, clientSecret, redirectUrl, null, null, useSandboxServer, RestAdapter.LogLevel.FULL);
         } else  {
-            client = new UberClient("", "", "", new MockApiClient(), useSandboxServer, RestAdapter.LogLevel.FULL);
+            client = new UberClient("", "", "", null, new MockApiClient(), useSandboxServer, RestAdapter.LogLevel.FULL);
         }
     }
 
