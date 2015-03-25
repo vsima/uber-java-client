@@ -101,9 +101,9 @@ public abstract class BaseTest {
 
     protected void initClient(boolean useSandboxServer) {
         if (useSandboxServer) {
-            client = new UberClient("v1", clientId, clientSecret, redirectUrl, null, useSandboxServer, RestAdapter.LogLevel.FULL);
+            client = new UberClient(clientId, clientSecret, redirectUrl, null, useSandboxServer, RestAdapter.LogLevel.FULL);
         } else  {
-            client = new UberClient("v1", "", "", "", new MockApiClient(), useSandboxServer, RestAdapter.LogLevel.FULL);
+            client = new UberClient("", "", "", new MockApiClient(), useSandboxServer, RestAdapter.LogLevel.FULL);
         }
     }
 

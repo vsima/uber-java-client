@@ -22,20 +22,17 @@ public interface UberService {
      * @param longitude Longitude component of location.
      * @return
      */
-    @GET("/products")
+    @GET("/v1/products")
     Products getProducts(@Query("latitude") double latitude,
                          @Query("longitude") double longitude);
 
     /**
      * @see #getProducts(double, double)
      */
-    @GET("/products")
+    @GET("/v1/products")
     void getProducts(@Query("latitude") double latitude,
                      @Query("longitude") double longitude,
                      Callback<Products> productsCallback);
-
-
-
 
     /**
      * The Price Estimates endpoint returns an estimated price range for each product offered at a given location.
@@ -48,7 +45,7 @@ public interface UberService {
      * @param endLongitude Longitude component of end location.
      * @return
      */
-    @GET("/estimates/price")
+    @GET("/v1/estimates/price")
     Prices getPriceEstimates(@Query("start_latitude") double startLatitude,
                              @Query("start_longitude") double startLongitude,
                              @Query("end_latitude") double endLatitude,
@@ -57,7 +54,7 @@ public interface UberService {
     /**
      * @see #getPriceEstimates(double, double, double, double)
      */
-    @GET("/estimates/price")
+    @GET("/v1/estimates/price")
     void getPriceEstimates(@Query("start_latitude") double startLatitude,
                            @Query("start_longitude") double startLongitude,
                            @Query("end_latitude") double endLatitude,
@@ -75,7 +72,7 @@ public interface UberService {
      * @param productId (optional) Unique identifier representing a specific product for a given latitude & longitude.
      * @return Times
      */
-    @GET("/estimates/time")
+    @GET("/v1/estimates/time")
     Times getTimeEstimates(@Query("start_latitude") double startLatitude,
                            @Query("start_longitude") double startLongitude,
                            @Query("customer_uuid") String customerUUID,
@@ -84,7 +81,7 @@ public interface UberService {
     /**
      * @see #getTimeEstimates(double, double, String, String)
      */
-    @GET("/estimates/time")
+    @GET("/v1/estimates/time")
     void getTimeEstimates(@Query("start_latitude") double startLatitude,
                           @Query("start_longitude") double startLongitude,
                           @Query("customer_uuid") String customerUUID,
@@ -100,7 +97,7 @@ public interface UberService {
      * @param endLongitude Longitude component of end location.
      * @return Promotion
      */
-    @GET("/promotions")
+    @GET("/v1/promotions")
     Promotion getPromotions(@Query("start_latitude") double startLatitude,
                             @Query("start_longitude") double startLongitude,
                             @Query("end_latitude") double endLatitude,
@@ -109,7 +106,7 @@ public interface UberService {
     /**
      * @see #getPromotions(double, double, double, double)
      */
-    @GET("/promotions")
+    @GET("/v1/promotions")
     void getPromotions(@Query("start_latitude") double startLatitude,
                             @Query("start_longitude") double startLongitude,
                             @Query("end_latitude") double endLatitude,
@@ -121,12 +118,12 @@ public interface UberService {
      *
      * @return UserProfile
      */
-    @GET("/me")
+    @GET("/v1/me")
     UserProfile getMe();
     /**
      * @see #getMe()
      */
-    @GET("/me")
+    @GET("/v1/me")
     void getMe(Callback<UserProfile> userProfileCallback);
 
     /**
@@ -139,13 +136,13 @@ public interface UberService {
      * @param requestBody
      * @return
      */
-    @POST("/requests")
+    @POST("/v1/requests")
     Request postRequest(@Body RequestBody requestBody);
 
     /**
      * @see #postRequest(com.victorsima.uber.model.request.RequestBody request)
      */
-    @POST("/requests")
+    @POST("/v1/requests")
     void postRequest(@Body RequestBody requestBody, Callback<Request> callback);
 
 
@@ -154,13 +151,13 @@ public interface UberService {
      * @param requestId Unique identifier representing a Request.
      * @return
      */
-    @GET("/requests/{request_id}")
+    @GET("/v1/requests/{request_id}")
     Request getRequestDetails(@Path("request_id") String requestId);
 
     /**
      *@see #getRequestDetails(String)
      */
-    @GET("/requests/{request_id}")
+    @GET("/v1/requests/{request_id}")
     void getRequestDetails(@Path("request_id") String requestId, Callback<Request> callback);
 
     /**
@@ -168,15 +165,35 @@ public interface UberService {
      * @param requestId Unique identifier representing a Request.
      * @return
      */
-    @DELETE("/requests/{request_id}")
+    @DELETE("/v1/requests/{request_id}")
     Response deleteRequest(@Path("request_id") String requestId);
 
     /**
      * @see #deleteRequest(String)
      */
-    @DELETE("/requests/{request_id}")
+    @DELETE("/v1/requests/{request_id}")
     void deleteRequest(@Path("request_id") String requestId, Callback<Response> callback);
 
-    @GET("/requests/{request_id}/map")
+    @GET("/v1/requests/{request_id}/map")
     RequestMap getRequestMap(@Path("request_id") String requestId);
+
+    /**
+     * <p>The User Activity endpoint returns a limited amount of data about a user's lifetime activity with Uber.
+     * The response will include pickup and dropoff times, the distance of past requests, and information about
+     * which products were requested.</p>
+     * <p>The history array in the response will have a maximum length based on the limit parameter.
+     * The response value count may exceed limit, therefore subsequent API requests may be necessary.</p>
+     *
+     * @param offset Offset the list of returned results by this amount. Default is zero.
+     * @param limit Number of items to retrieve. Default is 5, maximum is 50.
+     * @return
+     */
+    @GET("/v1.1/history")
+    UserActivity getUserActivity(@Query("offset") Integer offset, @Query("limit") Integer limit);
+
+    /**
+     * @see #getUserActivity(Integer, Integer)
+     */
+    @GET("/v1.1/history")
+    void getUserActivity(@Query("offset") Integer offset, @Query("limit") Integer limit, Callback<UserActivity> callback);
 }

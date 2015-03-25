@@ -1,7 +1,6 @@
 package com.victorsima.uber;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.squareup.okhttp.OkHttpClient;
 import com.victorsima.uber.exception.ForbiddenException;
 import com.victorsima.uber.exception.UnauthorizedException;
@@ -12,6 +11,9 @@ import retrofit.client.Client;
 import retrofit.client.OkClient;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
+
+import java.lang.reflect.Type;
+import java.util.Date;
 
 /**
  * The Uber api client object
@@ -60,27 +62,29 @@ public class UberClient {
 
     /**
      * Constructor
-     * @param version
      * @param clientId
      * @param clientSecret
      * @param clientRedirectUri
      * @param client
      * @param logLevel
      */
-    public UberClient(String version, String clientId, String clientSecret, String clientRedirectUri, Client client, boolean useSandbox, RestAdapter.LogLevel logLevel) {
-        this.version = version;
+    public UberClient(String clientId, String clientSecret, String clientRedirectUri, Client client, boolean useSandbox, RestAdapter.LogLevel logLevel) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.clientRedirectUri = clientRedirectUri;
 
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                .registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+                    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                        return new Date(json.getAsJsonPrimitive().getAsLong());
+                    }
+                });
         OkHttpClient okHttpClient = new OkHttpClient();
         gson = gsonBuilder.create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint((useSandbox ? sandboxApiUri : apiUri) + "/" + version)
+                .setEndpoint(useSandbox ? sandboxApiUri : apiUri)
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade requestFacade) {

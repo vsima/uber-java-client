@@ -3,19 +3,18 @@ package com.victorsima.uber.test;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 import com.gargoylesoftware.htmlunit.util.WebConnectionWrapper;
-import com.google.gson.Gson;
 import com.squareup.okhttp.Response;
 import com.victorsima.uber.UberAuthService;
 import com.victorsima.uber.Utils;
 import com.victorsima.uber.model.AccessToken;
 import com.victorsima.uber.model.Products;
+import com.victorsima.uber.model.UserActivity;
 import com.victorsima.uber.model.request.Request;
 import com.victorsima.uber.model.request.RequestBody;
 import com.victorsima.uber.model.request.RequestMap;
 import com.victorsima.uber.model.request.SurgeConfirmationError;
 import com.victorsima.uber.model.sandbox.SandboxProductBody;
 import com.victorsima.uber.model.sandbox.SandboxRequestBody;
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import retrofit.RetrofitError;
@@ -27,6 +26,7 @@ import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for requests using uber sandbox
@@ -48,6 +48,14 @@ public class SandboxServerTest extends BaseTest {
         if (!client.hasAccessToken()) {
             retrieveAccessToken();
         }
+    }
+
+    @Test
+    public void testHistory() throws Exception {
+        UserActivity userActivity = client.getApiService().getUserActivity(null, null);
+        assertNotNull("User Activity is null", userActivity);
+        assertNotNull(userActivity.getHistory());
+        assertTrue(userActivity.getHistory().size() > 0);
     }
 
     @Test
