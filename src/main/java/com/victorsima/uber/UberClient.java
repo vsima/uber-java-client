@@ -99,11 +99,13 @@ public class UberClient {
                 .setErrorHandler(new ErrorHandler() {
                     @Override
                     public Throwable handleError(RetrofitError retrofitError) {
-                        switch (retrofitError.getResponse().getStatus()) {
-                            case 401: //Unauthorized
-                                return new UnauthorizedException();
-                            case 403: //Forbidden
-                                return new ForbiddenException();
+                        if (retrofitError != null && retrofitError.getResponse() != null) {
+                            switch (retrofitError.getResponse().getStatus()) {
+                                case 401: //Unauthorized
+                                    return new UnauthorizedException();
+                                case 403: //Forbidden
+                                    return new ForbiddenException();
+                            }
                         }
                         return retrofitError;
                     }
