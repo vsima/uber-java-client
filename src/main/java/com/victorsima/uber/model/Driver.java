@@ -12,7 +12,7 @@ public class Driver {
     private String phoneNumber;
     @Expose
     @SerializedName("rating")
-    private int rating;
+    private float rating;
     @Expose
     @SerializedName("picture_url")
     private String pictureUrl;
@@ -28,11 +28,11 @@ public class Driver {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
