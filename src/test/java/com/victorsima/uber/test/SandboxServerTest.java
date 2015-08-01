@@ -256,6 +256,7 @@ public class SandboxServerTest extends BaseTest {
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
         webClient.getOptions().setRedirectEnabled(true);
         webClient.getOptions().setThrowExceptionOnScriptError(false);
+//        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
         webClient.getOptions().setCssEnabled(true);
         webClient.getOptions().setJavaScriptEnabled(false);
         webClient.getOptions().setUseInsecureSSL(true);
@@ -276,9 +277,11 @@ public class SandboxServerTest extends BaseTest {
         //check for the Accept html page
         if (scopePage instanceof HtmlPage) {
             //click accept button
-            final HtmlForm form2 = ((HtmlPage)scopePage).getForms().get(0);
-            final HtmlButton allowButton = (HtmlButton) form2.getByXPath("//button[@value='yes']").get(0);
-            allowButton.click();
+            if (((HtmlPage)scopePage).getForms().size() > 0) {
+                final HtmlForm form2 = ((HtmlPage) scopePage).getForms().get(0);
+                final HtmlButton allowButton = (HtmlButton) form2.getByXPath("//button[@value='yes']").get(0);
+                allowButton.click();
+            }
         }
     }
 }
