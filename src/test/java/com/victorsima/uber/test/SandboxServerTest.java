@@ -256,7 +256,7 @@ public class SandboxServerTest extends BaseTest {
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
         webClient.getOptions().setRedirectEnabled(true);
         webClient.getOptions().setThrowExceptionOnScriptError(false);
-//        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
         webClient.getOptions().setCssEnabled(true);
         webClient.getOptions().setJavaScriptEnabled(false);
         webClient.getOptions().setUseInsecureSSL(true);
