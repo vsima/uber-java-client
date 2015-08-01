@@ -23,14 +23,14 @@ Download
 
 Download [the latest JAR][1] or grab via Gradle:
 ```groovy
-compile 'com.victorsima:uber-java-client:0.0.2'
+compile 'com.victorsima:uber-java-client:0.0.3'
 ```
 or Maven:
 ```xml
 <dependency>
   <groupId>com.victorsima</groupId>
   <artifactId>uber-java-client</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
 </dependency>
 ```
 
@@ -98,5 +98,5 @@ License
      THE SOFTWARE.
  
 
-[1]: http://repo1.maven.org/maven2/com/victorsima/uber-java-client/0.0.2/uber-java-client-0.0.2.jar
+[1]: http://repo1.maven.org/maven2/com/victorsima/uber-java-client/0.0.3/uber-java-client-0.0.3.jar
 
