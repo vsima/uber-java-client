@@ -1,7 +1,7 @@
 Uber API client for Android & Java
 ==================================
 [![Build Status](https://travis-ci.org/vsima/uber-java-client.svg?branch=master)](https://travis-ci.org/vsima/uber-java-client)
-
+[![Coverage Status](https://coveralls.io/repos/vsima/uber-java-client/badge.svg?branch=master&service=github)](https://coveralls.io/github/vsima/uber-java-client?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.victorsima/uber-java-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.victorsima/uber-java-client)
 
 
