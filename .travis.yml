@@ -5,11 +5,13 @@ jdk:
 cache:
   directories:
     - $HOME/.m2
-
 script:
   - "./gradlew test testSandbox"
+after_success:
+  - ./gradlew jacocoTestReport coveralls
 env:
   global:
+  - TERM=dumb
   - secure: eEypfjZZdSKGlLSRGb4M8XV4x45BE8P5NfdVBmiulidS3E0Yf+LFRuQH66vnLhGcC11JBjYQ3hQg8OdHqgVrGCCmbeeNxOiQ2NdpCQGpF232BqmQCVZz3UodFeygpDzcekGax4/UH8TwVFTJXmTMI+w648HCN3/c9i/aXFMmHxY=
   - secure: uQL3+Kn7RWmJ5o2/oNuYElhrcI6A83ffTTRb0iCZiSNo2TSkgtk6etnoBV4TGQHL2e8LOslohfNSSOwg7CUj8R4BjTtNuRQsu9cufvZ/EZA/Zcii8EJt50j9d6Fi2u8ER/Wi/zVfKfLWdfZt6SZrCJalDhIUkud7y4ppWoLRWUY=
   - secure: qOwgYxO+kEeEf9/hNBlgSxtZRSajevKbr8H1MgVbTJpsFbnzTNybbyDqYNynOgWrDHQjMNiHB6g9zq8agFBL24Und/xlwXOYWHxrvBnxL789nKr0NdXmzHQ1RVuPhVvUZZr7w3g411c9DnvFUd3+XYlRzcW0VY2duY3rKVFbihU=

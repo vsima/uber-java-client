@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
@@ -7,6 +8,16 @@ sourceCompatibility = 1.7
 group = "com.victorsima"
 archivesBaseName = "uber-java-client"
 version = '0.0.4-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -30,9 +41,10 @@ test {
 }
 jacocoTestReport {
     reports {
-        xml.enabled false
+        xml.enabled true
+        html.enabled true
         csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
+//        html.destination "${buildDir}/jacocoHtml"
     }
 }
 
