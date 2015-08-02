@@ -17,6 +17,7 @@ import com.victorsima.uber.model.sandbox.SandboxProductBody;
 import com.victorsima.uber.model.sandbox.SandboxRequestBody;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import retrofit.RetrofitError;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ import static org.junit.Assert.*;
  * Tests for requests using uber sandbox
  *
  */
+@RunWith(RetryRunner.class)
 @SuppressWarnings("unchecked")
 public class SandboxServerTest extends BaseTest {
 
