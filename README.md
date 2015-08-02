@@ -2,6 +2,9 @@ Uber API client for Android & Java
 ==================================
 [![Build Status](https://travis-ci.org/vsima/uber-java-client.svg?branch=master)](https://travis-ci.org/vsima/uber-java-client)
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.victorsima/uber-java-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.victorsima/uber-java-client)
+
+
 A java wrapper for Uber's REST API for Android and Java applications. 
 
 Api calls implemented:
