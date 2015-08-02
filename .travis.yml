@@ -6,7 +6,7 @@ cache:
   directories:
     - $HOME/.m2
 script:
-  - ./gradlew testSandbox
+  - ./gradlew test
 after_success:
   - ./gradlew jacocoTestReport coveralls
 env:
