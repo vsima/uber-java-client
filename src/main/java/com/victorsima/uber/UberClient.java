@@ -55,7 +55,7 @@ public class UberClient {
      * @param logLevel
      */
     public UberClient(String serverToken, RestAdapter.LogLevel logLevel) {
-        this(null, null, null, null, null, false, logLevel);
+        this(null, null, null, serverToken, null, false, logLevel);
     }
 
     /**
